@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'router/app_router.dart';
 import 'themes/app_theme.dart';
 import '../l10n/app_localizations.dart';

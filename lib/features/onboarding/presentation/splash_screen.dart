@@ -16,7 +16,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   late AnimationController _logoController;
   late AnimationController _textController;
   late AnimationController _starsController;
-  
+
   late Animation<double> _logoScale;
   late Animation<double> _logoOpacity;
   late Animation<double> _textOpacity;
@@ -35,7 +35,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    
+
     _textController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -50,26 +50,29 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       CurvedAnimation(parent: _logoController, curve: Curves.elasticOut),
     );
 
-    _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _logoController, curve: Curves.easeIn),
-    );
+    _logoOpacity = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _logoController, curve: Curves.easeIn));
 
-    _textOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _textController, curve: Curves.easeIn),
-    );
+    _textOpacity = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _textController, curve: Curves.easeIn));
 
-    _starsOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _starsController, curve: Curves.easeIn),
-    );
+    _starsOpacity = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _starsController, curve: Curves.easeIn));
   }
 
   void _startAnimationSequence() async {
     await Future.delayed(const Duration(milliseconds: 300));
     _starsController.forward();
-    
+
     await Future.delayed(const Duration(milliseconds: 500));
     _logoController.forward();
-    
+
     await Future.delayed(const Duration(milliseconds: 800));
     _textController.forward();
   }
@@ -77,8 +80,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   void _navigateAfterDelay() {
     Future.delayed(const Duration(seconds: 3), () {
       if (!mounted) return;
-      
-      context.go(RouteNames.selectLanguage);
+
+      context.go(RouteNames.onboarding);
     });
   }
 
@@ -93,12 +96,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final cosmic = context.cosmic;
-    
+
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: cosmic.nightSkyGradient,
-        ),
+        decoration: BoxDecoration(gradient: cosmic.nightSkyGradient),
         child: Stack(
           children: [
             // Animated stars background
@@ -116,7 +117,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                 );
               },
             ),
-            
+
             // Main content
             Center(
               child: Column(
@@ -154,9 +155,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       );
                     },
                   ),
-                  
+
                   const SizedBox(height: 32),
-                  
+
                   // Animated app name and motto
                   AnimatedBuilder(
                     animation: _textController,
@@ -166,8 +167,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         child: Column(
                           children: [
                             ShaderMask(
-                              shaderCallback: (bounds) => cosmic.cosmicGradient
-                                  .createShader(bounds),
+                              shaderCallback: (bounds) =>
+                                  cosmic.cosmicGradient.createShader(bounds),
                               child: const Text(
                                 'শূন্য প্রাঙ্গণ',
                                 style: TextStyle(
@@ -178,20 +179,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                                 ),
                               ),
                             ),
-                            
-                            const SizedBox(height: 8),
-                            
-                            const Text(
-                              'Shunno Prangon',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white70,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            
+
                             const SizedBox(height: 16),
-                            
+
                             const Text(
                               'একটি নক্ষত্রে মনের মিলন',
                               style: TextStyle(
@@ -200,25 +190,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                                 fontStyle: FontStyle.italic,
                               ),
                             ),
-                            
-                            const SizedBox(height: 4),
-                            
-                            const Text(
-                              'Connecting minds, one star at a time',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white70,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
                           ],
                         ),
                       );
                     },
                   ),
-                  
+
                   const SizedBox(height: 80),
-                  
+
                   // Loading indicator
                   const SizedBox(
                     width: 24,
@@ -239,7 +218,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 }
 
 class StarsPainter extends CustomPainter {
-  
   StarsPainter({required this.animationValue});
   final double animationValue;
 
@@ -253,11 +231,14 @@ class StarsPainter extends CustomPainter {
     for (int i = 0; i < 100; i++) {
       final x = (i * 37.0) % size.width;
       final y = (i * 73.0) % size.height;
-      
+
       // Make stars twinkle with animation
-      final opacity = (0.3 + 0.7 * ((animationValue + i * 0.1) % 1.0)).clamp(0.0, 1.0);
+      final opacity = (0.3 + 0.7 * ((animationValue + i * 0.1) % 1.0)).clamp(
+        0.0,
+        1.0,
+      );
       paint.color = Colors.white.withValues(alpha: opacity);
-      
+
       final radius = 1.0 + (i % 3) * 0.5;
       canvas.drawCircle(Offset(x, y), radius, paint);
     }

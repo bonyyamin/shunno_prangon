@@ -18,7 +18,7 @@ class OnboardingGuard {
 
     // If user has completed onboarding and is trying to access onboarding
     if (hasCompletedOnboarding && currentLocation == RouteNames.onboarding) {
-      return RouteNames.home;
+      return RouteNames.dashboard;
     }
 
     return null;

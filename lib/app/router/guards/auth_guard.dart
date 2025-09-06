@@ -63,7 +63,7 @@ class AuthGuard {
 
     if (authRoutes.contains(state.uri.toString())) {
       return authState.when(
-        data: (user) => user != null ? RouteNames.home : null,
+        data: (user) => user != null ? RouteNames.dashboard : null,
         loading: () => null,
         error: (_, _) => null,
       );

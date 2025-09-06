@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 // Onboarding screens
 import 'package:shunno_prangon/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:shunno_prangon/features/onboarding/presentation/splash_screen.dart';
-import 'package:shunno_prangon/features/onboarding/presentation/select_language_screen.dart';
 
 // Route names
 import 'route_names.dart';
@@ -57,16 +56,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: RouteNames.splash,
         builder: (context, state) => const SplashScreen(),
       ),
-      GoRoute(
-        path: RouteNames.selectLanguage,
-        builder: (context, state) => const SelectLanguageScreen(),
-      ),
+      // GoRoute(
+      //   path: RouteNames.selectLanguage,
+      //   builder: (context, state) => const SelectLanguageScreen(),
+      // ),
       GoRoute(
         path: RouteNames.onboarding,
         builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
-        path: RouteNames.home,
+        path: RouteNames.dashboard,
         builder: (context, state) => const Dashboard(),
       ),
 
@@ -206,12 +205,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                context.go(RouteNames.home);
-              },
-              child: const Text('Go Home'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     context.go(RouteNames.home);
+            //   },
+            //   child: const Text('Go Home'),
+            // ),
           ],
         ),
       ),

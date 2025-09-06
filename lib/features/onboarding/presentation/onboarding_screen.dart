@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../../app/router/route_names.dart';
 import '../../../../../app/router/guards/onboarding_guard.dart';
 import '../../../../../app/themes/theme_extensions.dart';
-import '../../../../../l10n/app_localizations.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -45,7 +44,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   void _completeOnboarding() {
     OnboardingGuard.completeOnboarding(ref);
-    context.go(RouteNames.home);
+    context.go(RouteNames.login);
   }
 
   void _skipOnboarding() {
@@ -61,24 +60,26 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final cosmic = context.cosmic;
-    final l10n = AppLocalizations.of(context)!;
 
     final List<Map<String, dynamic>> pages = [
       {
-        'title': l10n.onboarding_page1_title,
-        'description': l10n.onboarding_page1_description,
+        'title': 'মহাকাশের রহস্য আবিষ্কার করুন',
+        'description':
+            'জ্যোতির্বিজ্ঞান, পদার্থবিজ্ঞান এবং মহাকাশ অনুসন্ধানের আকর্ষণীয় জগতে প্রবেশ করুন',
         'icon': Icons.explore,
         'gradient': [const Color(0xFF4B5B8B), const Color(0xFF789AD9)],
       },
       {
-        'title': l10n.onboarding_page2_title,
-        'description': l10n.onboarding_page2_description,
+        'title': 'জ্ঞান ভাগাভাগি করুন',
+        'description':
+            'আপনার বৈজ্ঞানিক আবিষ্কার এবং চিন্তাভাবনা সবার সাথে শেয়ার করুন',
         'icon': Icons.share,
         'gradient': [const Color(0xFF789AD9), const Color(0xFFA2C7E7)],
       },
       {
-        'title': l10n.onboarding_page3_title,
-        'description': l10n.onboarding_page3_description,
+        'title': 'একসাথে জানুন ও বুঝুন',
+        'description':
+            'বাংলা ভাষায় বিজ্ঞানের জটিল বিষয়গুলো সহজভাবে জানুন এবং বুঝুন',
         'icon': Icons.school,
         'gradient': [const Color(0xFFA2C7E7), const Color(0xFF4B5B8B)],
       },
@@ -86,9 +87,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: cosmic.nightSkyGradient,
-        ),
+        decoration: BoxDecoration(gradient: cosmic.nightSkyGradient),
         child: SafeArea(
           child: Column(
             children: [
@@ -99,12 +98,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   padding: const EdgeInsets.all(16.0),
                   child: TextButton(
                     onPressed: _skipOnboarding,
-                    child: Text(
-                      l10n.skip,
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 16,
-                      ),
+                    child: const Text(
+                      'এড়িয়ে যান',
+                      style: TextStyle(color: Colors.white70, fontSize: 16),
                     ),
                   ),
                 ),
@@ -143,10 +139,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     _currentPage > 0
                         ? TextButton.icon(
                             onPressed: _previousPage,
-                            icon: const Icon(Icons.arrow_back, color: Colors.white70),
-                            label: Text(
-                              l10n.previous,
-                              style: const TextStyle(color: Colors.white70),
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.white70,
+                            ),
+                            label: const Text(
+                              'পূর্ববর্তী',
+                              style: TextStyle(color: Colors.white70),
                             ),
                           )
                         : const SizedBox(width: 100),
@@ -170,8 +169,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         children: [
                           Text(
                             _currentPage == pages.length - 1
-                                ? l10n.getStarted
-                                : l10n.next,
+                                ? 'শুরু করুন'
+                                : 'পরবর্তী',
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -213,7 +212,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: (page['gradient'] as List<Color>).first.withValues(alpha: 0.3),
+                  color: (page['gradient'] as List<Color>).first.withValues(
+                    alpha: 0.3,
+                  ),
                   blurRadius: 20,
                   spreadRadius: 2,
                 ),

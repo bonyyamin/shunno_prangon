@@ -17,41 +17,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<OnboardingPage> _pages = const [
-    OnboardingPage(
-      title: 'মহাকাশের রহস্য আবিষ্কার করুন',
-      titleEn: 'Discover Cosmic Mysteries',
-      description: 'জ্যোতির্বিজ্ঞান, পদার্থবিজ্ঞান এবং মহাকাশ অনুসন্ধানের বিস্ময়কর জগতে প্রবেশ করুন',
-      descriptionEn: 'Dive into the fascinating world of astronomy, physics, and space exploration',
-      icon: Icons.explore,
-      gradient: [Color(0xFF4B5B8B), Color(0xFF789AD9)],
-    ),
-    OnboardingPage(
-      title: 'জ্ঞান ভাগাভাগি করুন',
-      titleEn: 'Share Knowledge',
-      description: 'আপনার বৈজ্ঞানিক আবিষ্কার এবং চিন্তাভাবনা সবার সাথে শেয়ার করুন',
-      descriptionEn: 'Share your scientific discoveries and thoughts with the community',
-      icon: Icons.share,
-      gradient: [Color(0xFF789AD9), Color(0xFFA2C7E7)],
-    ),
-    OnboardingPage(
-      title: 'একসাথে শিখুন',
-      titleEn: 'Learn Together',
-      description: 'বাংলা ভাষায় বিজ্ঞানের জটিল বিষয়গুলো সহজভাবে বুঝুন এবং শেখান',
-      descriptionEn: 'Understand and teach complex scientific topics in Bengali language',
-      icon: Icons.school,
-      gradient: [Color(0xFFA2C7E7), Color(0xFF4B5B8B)],
-    ),
-  ];
-
   void _onPageChanged(int page) {
     setState(() {
       _currentPage = page;
     });
   }
 
-  void _nextPage() {
-    if (_currentPage < _pages.length - 1) {
+  void _nextPage(int numPages) {
+    if (_currentPage < numPages - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -88,8 +61,29 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final cosmic = context.cosmic;
-    final l10n = AppLocalizations.of(context);
-    
+    final l10n = AppLocalizations.of(context)!;
+
+    final List<Map<String, dynamic>> pages = [
+      {
+        'title': l10n.onboarding_page1_title,
+        'description': l10n.onboarding_page1_description,
+        'icon': Icons.explore,
+        'gradient': [const Color(0xFF4B5B8B), const Color(0xFF789AD9)],
+      },
+      {
+        'title': l10n.onboarding_page2_title,
+        'description': l10n.onboarding_page2_description,
+        'icon': Icons.share,
+        'gradient': [const Color(0xFF789AD9), const Color(0xFFA2C7E7)],
+      },
+      {
+        'title': l10n.onboarding_page3_title,
+        'description': l10n.onboarding_page3_description,
+        'icon': Icons.school,
+        'gradient': [const Color(0xFFA2C7E7), const Color(0xFF4B5B8B)],
+      },
+    ];
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -121,9 +115,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 child: PageView.builder(
                   controller: _pageController,
                   onPageChanged: _onPageChanged,
-                  itemCount: _pages.length,
+                  itemCount: pages.length,
                   itemBuilder: (context, index) {
-                    return _buildOnboardingPage(_pages[index]);
+                    return _buildOnboardingPage(pages[index]);
                   },
                 ),
               ),
@@ -132,7 +126,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                  _pages.length,
+                  pages.length,
                   (index) => _buildPageIndicator(index == _currentPage),
                 ),
               ),
@@ -159,7 +153,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
                     // Next/Get Started button
                     ElevatedButton(
-                      onPressed: _nextPage,
+                      onPressed: () => _nextPage(pages.length),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: cosmic.nightSkyGradient.colors.first,
@@ -175,8 +169,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            _currentPage == _pages.length - 1
-                                ? 'শুরু করুন'
+                            _currentPage == pages.length - 1
+                                ? l10n.getStarted
                                 : l10n.next,
                             style: const TextStyle(
                               fontSize: 16,
@@ -200,7 +194,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     );
   }
 
-  Widget _buildOnboardingPage(OnboardingPage page) {
+  Widget _buildOnboardingPage(Map<String, dynamic> page) {
     return Padding(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -215,18 +209,18 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: page.gradient,
+                colors: page['gradient'] as List<Color>,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: page.gradient.first.withOpacity(0.3),
+                  color: (page['gradient'] as List<Color>).first.withOpacity(0.3),
                   blurRadius: 20,
                   spreadRadius: 2,
                 ),
               ],
             ),
             child: Icon(
-              page.icon,
+              page['icon'] as IconData,
               size: 80,
               color: Colors.white,
             ),
@@ -234,9 +228,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
           const SizedBox(height: 48),
 
-          // Bengali title
+          // Title
           Text(
-            page.title,
+            page['title'] as String,
             style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -246,42 +240,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 8),
-
-          // English title
-          Text(
-            page.titleEn,
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.white70,
-              fontStyle: FontStyle.italic,
-            ),
-            textAlign: TextAlign.center,
-          ),
-
           const SizedBox(height: 32),
 
-          // Bengali description
+          // Description
           Text(
-            page.description,
+            page['description'] as String,
             style: const TextStyle(
               fontSize: 16,
               color: Colors.white70,
               height: 1.5,
-            ),
-            textAlign: TextAlign.center,
-          ),
-
-          const SizedBox(height: 12),
-
-          // English description
-          Text(
-            page.descriptionEn,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.white60,
-              height: 1.4,
-              fontStyle: FontStyle.italic,
             ),
             textAlign: TextAlign.center,
           ),
@@ -302,22 +269,4 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ),
     );
   }
-}
-
-class OnboardingPage {
-  final String title;
-  final String titleEn;
-  final String description;
-  final String descriptionEn;
-  final IconData icon;
-  final List<Color> gradient;
-
-  const OnboardingPage({
-    required this.title,
-    required this.titleEn,
-    required this.description,
-    required this.descriptionEn,
-    required this.icon,
-    required this.gradient,
-  });
 }

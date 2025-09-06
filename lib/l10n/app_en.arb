@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+  "skip": "Skip",
+  "previous": "Previous",
+  "next": "Next",
+  "getStarted": "Get Started",
+  "onboarding_page1_title": "Discover Cosmic Mysteries",
+  "onboarding_page1_description": "Dive into the fascinating world of astronomy, physics, and space exploration",
+  "onboarding_page2_title": "Share Knowledge",
+  "onboarding_page2_description": "Share your scientific discoveries and thoughts with the community",
+  "onboarding_page3_title": "Learn Together",
+  "onboarding_page3_description": "Understand and teach complex scientific topics in Bengali language"
+}

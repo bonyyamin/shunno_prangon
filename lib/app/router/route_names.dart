@@ -3,6 +3,7 @@ class RouteNames {
 
   // Core app routes
   static const String splash = '/splash';
+  static const String selectLanguage = '/select-language';
   static const String onboarding = '/onboarding';
   static const String home = '/';
 

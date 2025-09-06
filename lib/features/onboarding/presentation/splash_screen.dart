@@ -80,29 +80,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     Future.delayed(const Duration(seconds: 3), () {
       if (!mounted) return;
       
-      final hasCompletedOnboarding = ref.read(onboardingProvider);
-      final authState = ref.read(authProvider);
-      
-      if (!hasCompletedOnboarding) {
-        context.go(RouteNames.onboarding);
-        return;
-      }
-      
-      authState.when(
-        data: (user) {
-          if (user == null) {
-            context.go(RouteNames.home);
-          } else {
-            context.go(RouteNames.home);
-          }
-        },
-        loading: () {
-          // Stay on splash while loading
-        },
-        error: (_, _) {
-          context.go(RouteNames.home);
-        },
-      );
+      context.go(RouteNames.selectLanguage);
     });
   }
 

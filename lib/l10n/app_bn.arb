@@ -1,0 +1,13 @@
+{
+  "@@locale": "bn",
+  "skip": "এড়িয়ে যান",
+  "previous": "পূর্ববর্তী",
+  "next": "পরবর্তী",
+  "getStarted": "শুরু করুন",
+  "onboarding_page1_title": "মহাকাশের রহস্য আবিষ্কার করুন",
+  "onboarding_page1_description": "জ্যোতির্বিজ্ঞান, পদার্থবিজ্ঞান এবং মহাকাশ অনুসন্ধানের বিস্ময়কর জগতে প্রবেশ করুন",
+  "onboarding_page2_title": "জ্ঞান ভাগাভাগি করুন",
+  "onboarding_page2_description": "আপনার বৈজ্ঞানিক আবিষ্কার এবং চিন্তাভাবনা সবার সাথে শেয়ার করুন",
+  "onboarding_page3_title": "একসাথে শিখুন",
+  "onboarding_page3_description": "বাংলা ভাষায় বিজ্ঞানের জটিল বিষয়গুলো সহজভাবে বুঝুন এবং শেখান"
+}

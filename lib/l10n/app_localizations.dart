@@ -1,182 +1,189 @@
-import 'package:flutter/material.dart';
-import 'package:shunno_prangon/l10n/app_localizations_en.dart';
-import 'package:shunno_prangon/l10n/app_localizations_bn.dart';
+import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_bn.dart';
+import 'app_localizations_en.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
 abstract class AppLocalizations {
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  final String localeName;
+
+  static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  // App Info
-  String get appName;
-  String get appMotto;
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
-  // Common
-  String get save;
-  String get cancel;
-  String get delete;
-  String get edit;
-  String get ok;
-  String get yes;
-  String get no;
-  String get loading;
-  String get error;
-  String get retry;
-  String get noData;
-  String get search;
-  String get filter;
-  String get sort;
-  String get share;
-  String get back;
-  String get next;
-  String get previous;
-  String get done;
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('bn'),
+    Locale('en')
+  ];
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
   String get skip;
 
-  // Navigation
-  String get home;
-  String get discover;
-  String get create;
-  String get profile;
-  String get settings;
+  /// No description provided for @previous.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previous;
 
-  // Authentication
-  String get login;
-  String get register;
-  String get logout;
-  String get email;
-  String get password;
-  String get confirmPassword;
-  String get forgotPassword;
-  String get resetPassword;
-  String get name;
-  String get signInWithGoogle;
-  String get signInWithFacebook;
-  String get dontHaveAccount;
-  String get alreadyHaveAccount;
-  String get createAccount;
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
 
-  // Articles
-  String get articles;
-  String get article;
-  String get title;
-  String get content;
-  String get author;
-  String get publishedOn;
-  String get category;
-  String get tags;
-  String get readTime;
-  String get views;
-  String get likes;
-  String get comments;
-  String get featured;
-  String get trending;
-  String get recent;
-  String get saved;
-  String get draft;
-  String get publish;
-  String get unpublish;
-  String get addToReadingList;
-  String get removeFromReadingList;
-  String get shareArticle;
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
 
-  // Categories
-  String get astronomy;
-  String get physics;
-  String get chemistry;
-  String get spaceExploration;
-  String get cosmology;
-  String get astrophysics;
-  String get particlePhysics;
-  String get quantumMechanics;
-  String get generalScience;
+  /// No description provided for @onboarding_page1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Discover Cosmic Mysteries'**
+  String get onboarding_page1_title;
 
-  // Create Article
-  String get createArticle;
-  String get editArticle;
-  String get articleTitle;
-  String get writeYourStory;
-  String get selectCategory;
-  String get addTags;
-  String get saveDraft;
-  String get publishArticle;
-  String get preview;
-  String get addCoverImage;
-  String get summary;
+  /// No description provided for @onboarding_page1_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Dive into the fascinating world of astronomy, physics, and space exploration'**
+  String get onboarding_page1_description;
 
-  // Search
-  String get searchArticles;
-  String get searchAuthors;
-  String get searchResults;
-  String get noSearchResults;
-  String get recentSearches;
-  String get popularTopics;
-  String get suggestions;
+  /// No description provided for @onboarding_page2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Knowledge'**
+  String get onboarding_page2_title;
 
-  // Profile
-  String get myProfile;
-  String get editProfile;
-  String get myArticles;
-  String get savedArticles;
-  String get drafts;
-  String get bio;
-  String get website;
-  String get twitter;
-  String get linkedin;
-  String get github;
-  String get joinDate;
-  String get articlesCount;
-  String get followersCount;
-  String get followingCount;
+  /// No description provided for @onboarding_page2_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your scientific discoveries and thoughts with the community'**
+  String get onboarding_page2_description;
 
-  // Settings
-  String get appSettings;
-  String get theme;
-  String get language;
-  String get notifications;
-  String get privacy;
-  String get about;
-  String get lightTheme;
-  String get darkTheme;
-  String get systemTheme;
-  String get bengali;
-  String get english;
+  /// No description provided for @onboarding_page3_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn Together'**
+  String get onboarding_page3_title;
 
-  // Validation Messages
-  String get emailRequired;
-  String get invalidEmail;
-  String get passwordRequired;
-  String get passwordTooShort;
-  String get passwordMismatch;
-  String get nameRequired;
-  String get titleRequired;
-  String get contentRequired;
-  String get categoryRequired;
+  /// No description provided for @onboarding_page3_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Understand and teach complex scientific topics in Bengali language'**
+  String get onboarding_page3_description;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) {
-    return ['en', 'bn'].contains(locale.languageCode);
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
   }
 
   @override
-  Future<AppLocalizations> load(Locale locale) {
-    switch (locale.languageCode) {
-      case 'en':
-        return Future.value(AppLocalizationsEn());
-      case 'bn':
-        return Future.value(AppLocalizationsBn());
-      default:
-        return Future.value(AppLocalizationsEn());
-    }
-  }
+  bool isSupported(Locale locale) => <String>['bn', 'en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'bn': return AppLocalizationsBn();
+    case 'en': return AppLocalizationsEn();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

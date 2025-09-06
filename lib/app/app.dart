@@ -18,6 +18,7 @@ class ShunnoPrangonApp extends ConsumerWidget {
 
     return MaterialApp.router(
       title: 'Shunno Prangon',
+      debugShowCheckedModeBanner: false,
       routerConfig: router,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

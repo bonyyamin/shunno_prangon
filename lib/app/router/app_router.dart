@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Onboarding screens
 import 'package:shunno_prangon/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:shunno_prangon/features/onboarding/presentation/splash_screen.dart';
+import 'package:shunno_prangon/features/onboarding/presentation/select_language_screen.dart';
 
 
 // Route names
@@ -54,21 +55,15 @@ import 'package:shunno_prangon/features/profile/presentation/pages/settings_page
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: RouteNames.splash,
-    redirect: (context, state) {
-      // Apply onboarding guard first
-      final onboardingRedirect = OnboardingGuard.redirectLogic(state, ref);
-      if (onboardingRedirect != null) {
-        return onboardingRedirect;
-      }
-
-      // Then apply auth guard
-      return AuthGuard.redirectLogic(state, ref);
-    },
     routes: [
       // Core app routes
       GoRoute(
         path: RouteNames.splash,
         builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.selectLanguage,
+        builder: (context, state) => const SelectLanguageScreen(),
       ),
       GoRoute(
         path: RouteNames.onboarding,

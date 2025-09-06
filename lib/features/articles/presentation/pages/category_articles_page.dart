@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 class CategoryArticlesPage extends StatelessWidget {
-  final String category;
   
   const CategoryArticlesPage({super.key, required this.category});
+  final String category;
 
   @override
   Widget build(BuildContext context) {

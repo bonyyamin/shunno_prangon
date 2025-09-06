@@ -7,17 +7,13 @@ import 'package:shunno_prangon/features/onboarding/presentation/onboarding_scree
 import 'package:shunno_prangon/features/onboarding/presentation/splash_screen.dart';
 import 'package:shunno_prangon/features/onboarding/presentation/select_language_screen.dart';
 
-
 // Route names
 import 'route_names.dart';
 
 // Guards
-import 'guards/auth_guard.dart';
-import 'guards/onboarding_guard.dart';
 
 // Core screens
-
-import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/home/presentation/pages/dashboard.dart';
 
 // Authentication screens
 import '../../features/authentication/presentation/pages/login_page.dart';
@@ -71,7 +67,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: RouteNames.home,
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => const Dashboard(),
       ),
 
       // Authentication routes
@@ -192,18 +188,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
-      appBar: AppBar(
-        title: const Text('Page Not Found'),
-      ),
+      appBar: AppBar(title: const Text('Page Not Found')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.error_outline,
-              size: 64,
-              color: Colors.red,
-            ),
+            const Icon(Icons.error_outline, size: 64, color: Colors.red),
             const SizedBox(height: 16),
             const Text(
               'Oops! Page not found',

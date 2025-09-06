@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shunno_prangon/features/authentication/presentation/providers/auth_provider.dart';
-import 'package:shunno_prangon/features/onboarding/presentation/provider/onboarding_provider.dart';
 import '../../../../../app/router/route_names.dart';
 import '../../../../../app/themes/theme_extensions.dart';
 

@@ -213,7 +213,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: (page['gradient'] as List<Color>).first.withOpacity(0.3),
+                  color: (page['gradient'] as List<Color>).first.withValues(alpha: 0.3),
                   blurRadius: 20,
                   spreadRadius: 2,
                 ),

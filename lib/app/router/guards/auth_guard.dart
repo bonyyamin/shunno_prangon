@@ -50,7 +50,7 @@ class AuthGuard {
           return null;
         },
         loading: () => RouteNames.splash,
-        error: (_, __) => RouteNames.login,
+        error: (_, _) => RouteNames.login,
       );
     }
 
@@ -65,7 +65,7 @@ class AuthGuard {
       return authState.when(
         data: (user) => user != null ? RouteNames.home : null,
         loading: () => null,
-        error: (_, __) => null,
+        error: (_, _) => null,
       );
     }
 

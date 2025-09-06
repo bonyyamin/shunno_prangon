@@ -3,10 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Mock user entity for demonstration
 class User {
-  final String id;
-  final String email;
-  final String? displayName;
-  final String? photoUrl;
 
   const User({
     required this.id,
@@ -14,6 +10,10 @@ class User {
     this.displayName,
     this.photoUrl,
   });
+  final String id;
+  final String email;
+  final String? displayName;
+  final String? photoUrl;
 }
 
 final authProvider = StateNotifierProvider<AuthNotifier, AsyncValue<User?>>((ref) {

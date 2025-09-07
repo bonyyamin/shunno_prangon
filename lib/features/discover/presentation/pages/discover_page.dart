@@ -1,9 +1,8 @@
 // lib/features/discover/presentation/pages/discover_page.dart
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shunno_prangon/app/constants/app_constants.dart';
-import 'package:shunno_prangon/app/router/route_names.dart';
 import 'package:shunno_prangon/app/themes/theme_extensions.dart';
+import 'package:shunno_prangon/features/discover/presentation/pages/category_page.dart';
 
 
 class DiscoverPage extends StatefulWidget {
@@ -162,8 +161,11 @@ class _DiscoverPageState extends State<DiscoverPage>
       elevation: AppConstants.cardElevation,
       child: InkWell(
         onTap: () {
-          // Navigate to category articles using GoRouter
-          GoRouter.of(context).go('${RouteNames.category}/${Uri.encodeComponent(category)}');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => CategoryPage(category: category),
+            ),
+          );
         },
         borderRadius: BorderRadius.circular(AppConstants.defaultBorderRadius),
         child: Container(

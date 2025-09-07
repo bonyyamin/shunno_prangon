@@ -1,7 +1,11 @@
 // lib/features/home/presentation/pages/home_page.dart
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shunno_prangon/app/constants/app_constants.dart';
+import 'package:shunno_prangon/app/router/route_names.dart';
 import 'package:shunno_prangon/app/themes/theme_extensions.dart';
+import 'package:shunno_prangon/features/create_article/presentation/pages/create_article_page.dart';
+import 'package:shunno_prangon/features/profile/presentation/pages/saved_articles_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -144,7 +148,11 @@ class HomePage extends StatelessWidget {
             title: 'লিখুন',
             subtitle: 'নতুন প্রবন্ধ',
             onTap: () {
-              // Navigate to write article
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const CreateArticlePage(),
+                ),
+              );
             },
           ),
         ),
@@ -156,7 +164,11 @@ class HomePage extends StatelessWidget {
             title: 'সংরক্ষিত',
             subtitle: 'পরে পড়ুন',
             onTap: () {
-              // Navigate to saved articles
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const SavedArticlesPage(),
+                ),
+              );
             },
           ),
         ),

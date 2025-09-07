@@ -49,13 +49,6 @@ class _CategoryPageState extends State<CategoryPage> {
     
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            // Navigate back to dashboard with tab index 1 (discover tab)
-            context.go('${RouteNames.dashboard}?tab=1');
-          },
-        ),
         title: Text(categoryName),
         actions: [
           IconButton(

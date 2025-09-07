@@ -95,6 +95,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const DiscoverPage(),
       ),
       GoRoute(
+        path: '${RouteNames.category}/:${RouteParams.category}',
+        builder: (context, state) {
+          final category = state.pathParameters[RouteParams.category] ?? '';
+          return CategoryPage(category: category);
+        },
+      ),
+      GoRoute(
         path: RouteNames.searchResults,
         builder: (context, state) {
           final query = state.uri.queryParameters[RouteParams.query] ?? '';
@@ -102,7 +109,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
-        path: '${RouteNames.categoryPage}/:${RouteParams.category}',
+        path: '${RouteNames.category}/:${RouteParams.category}',
         builder: (context, state) {
           final category = state.pathParameters[RouteParams.category]!;
           return CategoryPage(category: category);

@@ -14,10 +14,10 @@ class RouteNames {
   static const String forgotPassword = '/forgot-password';
   static const String profileSetup = '/profile-setup';
 
-  // Main app routes
+  // Discovery routes
   static const String discover = '/discover';
   static const String searchResults = '/search-results';
-  static const String categoryPage = '/category';
+  static const String category = '/category';
 
   // Article routes
   static const String articleDetail = '/article';

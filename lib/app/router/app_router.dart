@@ -66,7 +66,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: RouteNames.dashboard,
-        builder: (context, state) => const Dashboard(),
+        builder: (context, state) {
+          final tab = state.uri.queryParameters['tab'];
+          final initialIndex = tab != null ? int.tryParse(tab) ?? 0 : 0;
+          return Dashboard(initialIndex: initialIndex);
+        },
       ),
 
       // Authentication routes
@@ -109,15 +113,17 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // Article routes
       GoRoute(
-        path: '${RouteNames.articleDetail}/:${RouteParams.articleId}',
+        path: RouteNames.articleDetail,
         builder: (context, state) {
-          final articleId = state.pathParameters[RouteParams.articleId]!;
-          return ArticleDetailPage(articleId: articleId);
+          final articleId =
+              state.uri.queryParameters[RouteParams.articleId] ??
+              state.extra as String?;
+          return ArticleDetailPage(articleId: articleId ?? '');
         },
       ),
       GoRoute(
         path: RouteNames.articleList,
-        builder: (context, state) => const ArticleListPage(),
+        builder: (context, state) => const Dashboard(initialIndex: 2),
       ),
       GoRoute(
         path: '${RouteNames.categoryArticles}/:${RouteParams.category}',

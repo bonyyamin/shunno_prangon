@@ -1,6 +1,8 @@
 // lib/features/articles/presentation/pages/article_list_page.dart
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shunno_prangon/app/constants/app_constants.dart';
+import 'package:shunno_prangon/app/router/route_names.dart';
 import 'package:shunno_prangon/app/themes/theme_extensions.dart';
 
 class ArticleListPage extends StatefulWidget {
@@ -96,9 +98,7 @@ class _ArticleListPageState extends State<ArticleListPage>
             ),
             TextButton(
               onPressed: () {
-                setState(() {
-                  _selectedCategory = 'all';
-                });
+                context.go('${RouteNames.categoryArticles}/all');
               },
               child: const Text('সব দেখুন'),
             ),
@@ -226,10 +226,10 @@ class _ArticleListPageState extends State<ArticleListPage>
     return Card(
       elevation: AppConstants.cardElevation,
       child: InkWell(
-        onTap: () {
-          // Navigate to article detail
-          Navigator.pushNamed(context, '/article', arguments: 'article_$index');
-        },
+        onTap: () => context.go(
+            RouteNames.articleDetail,
+            extra: 'article_$index',
+          ),
         borderRadius: BorderRadius.circular(AppConstants.defaultBorderRadius),
         child: Padding(
           padding: const EdgeInsets.all(AppConstants.defaultPadding),

@@ -27,8 +27,6 @@ import '../../features/discover/presentation/pages/category_page.dart';
 
 // Article screens
 import '../../features/articles/presentation/pages/article_detail_page.dart';
-import '../../features/articles/presentation/pages/article_list_page.dart';
-import '../../features/articles/presentation/pages/category_articles_page.dart';
 
 // Create article screens
 import '../../features/create_article/presentation/pages/create_article_page.dart';
@@ -124,13 +122,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: RouteNames.articleList,
         builder: (context, state) => const Dashboard(initialIndex: 2),
-      ),
-      GoRoute(
-        path: '${RouteNames.categoryArticles}/:${RouteParams.category}',
-        builder: (context, state) {
-          final category = state.pathParameters[RouteParams.category]!;
-          return CategoryArticlesPage(category: category);
-        },
       ),
 
       // Create article routes

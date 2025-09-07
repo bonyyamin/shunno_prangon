@@ -96,12 +96,6 @@ class _ArticleListPageState extends State<ArticleListPage>
                 fontWeight: FontWeight.w600,
               ),
             ),
-            TextButton(
-              onPressed: () {
-                context.go('${RouteNames.categoryArticles}/all');
-              },
-              child: const Text('সব দেখুন'),
-            ),
           ],
         ),
         const SizedBox(height: AppConstants.smallPadding),

@@ -70,6 +70,8 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
                   _buildAuthorSection(context, cosmic),
                   const SizedBox(height: AppConstants.largePadding),
                   _buildRelatedArticles(context, cosmic),
+                  const SizedBox(height: AppConstants.largePadding),
+                  _buildFloatingActionButtons(context, cosmic),
                   const SizedBox(height: AppConstants.extraLargePadding),
                 ],
               ),
@@ -78,8 +80,7 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
         ],
       ),
       bottomNavigationBar: _buildBottomBar(context, cosmic),
-      floatingActionButton: _buildFloatingActionButtons(context, cosmic),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      // Floating action button has been moved to the bottom of the CustomScrollView
     );
   }
 
@@ -613,41 +614,20 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
     BuildContext context,
     CosmicThemeExtension cosmic,
   ) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        FloatingActionButton(
-          heroTag: "bookmark",
-          mini: true,
-          onPressed: () {
-            setState(() {
-              _isBookmarked = !_isBookmarked;
-            });
-          },
-          backgroundColor: _isBookmarked
-              ? cosmic.categoryColors['physics']
-              : Theme.of(context).colorScheme.surface,
-          child: Icon(
-            _isBookmarked ? Icons.bookmark : Icons.bookmark_outline,
-            color: _isBookmarked
-                ? Colors.white
-                : Theme.of(context).colorScheme.onSurface,
-          ),
-        ),
-        const SizedBox(height: AppConstants.smallPadding),
-        FloatingActionButton(
-          heroTag: "scroll_to_top",
-          mini: true,
-          onPressed: () {
-            _scrollController.animateTo(
-              0,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeOut,
-            );
-          },
-          child: const Icon(Icons.keyboard_arrow_up),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0), // Add some bottom padding
+      child: FloatingActionButton(
+        heroTag: "scroll_to_top",
+        mini: true,
+        onPressed: () {
+          _scrollController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOut,
+          );
+        },
+        child: const Icon(Icons.keyboard_arrow_up),
+      ),
     );
   }
 

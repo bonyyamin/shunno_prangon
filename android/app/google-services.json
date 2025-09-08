@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "712047111643",
+    "project_id": "shunno-prangon",
+    "storage_bucket": "shunno-prangon.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712047111643:android:44227f115a23a564438bfe",
+        "android_client_info": {
+          "package_name": "com.shunnoprangon.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712047111643-grqj5ed43lnu4eu8rrs4vpasbh1ec15q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfh2rBGdQI8_L1g9eYXz1PGnBd9nGWfNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712047111643-grqj5ed43lnu4eu8rrs4vpasbh1ec15q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

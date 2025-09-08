@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../app/constants/app_constants.dart';
-import '../../../../app/router/route_names.dart';
 import '../../../../app/themes/theme_extensions.dart';
 
 class DraftsPage extends StatefulWidget {

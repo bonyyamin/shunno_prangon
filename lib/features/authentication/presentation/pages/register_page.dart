@@ -1,18 +1,20 @@
 // lib/features/authentication/presentation/pages/register_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../app/constants/app_constants.dart';
 import '../../../../app/router/route_names.dart';
 import '../../../../app/themes/theme_extensions.dart';
+import '../providers/auth_provider.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  ConsumerState<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>
+class _RegisterPageState extends ConsumerState<RegisterPage>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -60,12 +62,48 @@ class _RegisterPageState extends State<RegisterPage>
 
     setState(() => _isLoading = true);
 
-    // Simulate registration process
-    await Future.delayed(const Duration(seconds: 2));
+    try {
+      print('🚀 Starting registration process...');
+      print('📧 Email: ${_emailController.text}');
+      print('👤 Display Name: ${_nameController.text}');
 
-    if (mounted) {
-      setState(() => _isLoading = false);
-      context.go(RouteNames.profileSetup);
+      final authNotifier = ref.read(authProvider.notifier);
+
+      // Register user with Firebase
+      await authNotifier.register(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        displayName: _nameController.text.trim(),
+      );
+
+      print('✅ Registration successful!');
+      print('📤 Sending email verification...');
+
+      // Send email verification
+      try {
+        await authNotifier.sendEmailVerification();
+        print('✅ Email verification sent!');
+      } catch (emailError) {
+        print('❌ Email verification failed: $emailError');
+        // Don't throw here, just log the error and continue
+      }
+
+      if (mounted) {
+        setState(() => _isLoading = false);
+        context.go(RouteNames.emailVerification);
+      }
+    } catch (error) {
+      print('❌ Registration failed: $error');
+
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('নিবন্ধনে সমস্যা: ${error.toString()}'),
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        );
+      }
     }
   }
 

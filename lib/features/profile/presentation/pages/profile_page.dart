@@ -1,18 +1,21 @@
 // lib/features/profile/presentation/pages/profile_page.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shunno_prangon/app/constants/app_constants.dart';
+import 'package:shunno_prangon/app/router/route_names.dart';
 import 'package:shunno_prangon/app/themes/theme_extensions.dart';
+import '../../../authentication/presentation/providers/auth_provider.dart';
 
-class ProfilePage extends StatefulWidget {
-
+class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key, this.userId});
   final String? userId;
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  ConsumerState<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends ConsumerState<ProfilePage> {
   bool _isEditMode = false;
   final TextEditingController _nameController = TextEditingController(
     text: 'ড. আকাশ গাঙ্গুলী',
@@ -31,24 +34,44 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
+
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          _buildAppBar(context),
-          SliverPadding(
-            padding: const EdgeInsets.all(AppConstants.defaultPadding),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate([
-                _buildProfileHeader(context),
-                const SizedBox(height: AppConstants.largePadding),
-                _buildStatsSection(context),
-                const SizedBox(height: AppConstants.largePadding),
-                _buildTabSection(context),
-                const SizedBox(height: AppConstants.extraLargePadding),
-              ]),
-            ),
+      body: authState.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error, size: 64, color: Colors.red),
+              const SizedBox(height: 16),
+              Text('Error: $error'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => ref.invalidate(authProvider),
+                child: const Text('Retry'),
+              ),
+            ],
           ),
-        ],
+        ),
+        data: (user) => CustomScrollView(
+          slivers: [
+            _buildAppBar(context),
+            SliverPadding(
+              padding: const EdgeInsets.all(AppConstants.defaultPadding),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  _buildProfileHeader(context),
+                  const SizedBox(height: AppConstants.largePadding),
+                  _buildStatsSection(context),
+                  const SizedBox(height: AppConstants.largePadding),
+                  _buildTabSection(context),
+                  const SizedBox(height: AppConstants.extraLargePadding),
+                ]),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -124,6 +147,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildProfileHeader(BuildContext context) {
     final cosmic = context.cosmic;
+    final authState = ref.watch(authProvider);
+
+    // Get user data from auth state
+    final user = authState.maybeWhen(data: (user) => user, orElse: () => null);
 
     return Card(
       elevation: AppConstants.cardElevation,
@@ -180,12 +207,24 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   )
                 : Text(
-                    _nameController.text,
+                    user?.displayName ?? _nameController.text,
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
+            const SizedBox(height: AppConstants.smallPadding),
+            // Show user email
+            if (user?.email != null)
+              Text(
+                user!.email,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.7),
+                ),
+                textAlign: TextAlign.center,
+              ),
             const SizedBox(height: AppConstants.smallPadding),
             _isEditMode
                 ? TextField(
@@ -666,15 +705,76 @@ class _ProfilePageState extends State<ProfilePage> {
             child: const Text('বাতিল'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
-              // Handle logout
+              await _handleLogout();
             },
             child: const Text('লগ আউট'),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _handleLogout() async {
+    try {
+      print('🚪 Logout: Starting logout process...');
+
+      // Show loading indicator
+      if (mounted) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) =>
+              const Center(child: CircularProgressIndicator()),
+        );
+      }
+
+      // Get auth notifier and sign out
+      final authNotifier = ref.read(authProvider.notifier);
+      await authNotifier.signOut();
+
+      print('✅ Logout: Logout successful!');
+
+      // Close loading dialog
+      if (mounted) {
+        Navigator.pop(context);
+      }
+
+      // Show success message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('সফলভাবে লগ আউট করা হয়েছে'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+
+      // Navigate to login page
+      if (mounted) {
+        context.go(RouteNames.login);
+      }
+    } catch (error) {
+      print('❌ Logout: Failed - $error');
+
+      // Close loading dialog if it's open
+      if (mounted) {
+        Navigator.pop(context);
+      }
+
+      // Show error message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('লগ আউটে সমস্যা: ${error.toString()}'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    }
   }
 
   void _showDeleteConfirmationDialog(String itemType, VoidCallback onConfirm) {

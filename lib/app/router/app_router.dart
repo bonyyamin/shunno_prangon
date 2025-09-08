@@ -18,7 +18,7 @@ import '../../features/home/presentation/pages/dashboard.dart';
 import '../../features/authentication/presentation/pages/login_page.dart';
 import '../../features/authentication/presentation/pages/register_page.dart';
 import '../../features/authentication/presentation/pages/forgot_password_page.dart';
-import '../../features/authentication/presentation/pages/profile_setup_page.dart';
+import '../../features/authentication/presentation/pages/email_verification_screen.dart';
 
 // Discovery screens
 import '../../features/discover/presentation/pages/discover_page.dart';
@@ -85,8 +85,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const ForgotPasswordPage(),
       ),
       GoRoute(
-        path: RouteNames.profileSetup,
-        builder: (context, state) => const ProfileSetupPage(),
+        path: RouteNames.emailVerification,
+        builder: (context, state) => const EmailVerificationScreen(),
       ),
 
       // Discovery routes

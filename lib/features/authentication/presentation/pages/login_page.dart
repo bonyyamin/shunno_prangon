@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/constants/app_constants.dart';
 import '../../../../app/router/route_names.dart';
 import '../../../../app/themes/theme_extensions.dart';
+import '../widgets/auth_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -158,15 +159,13 @@ class _LoginPageState extends State<LoginPage>
               const SizedBox(height: AppConstants.largePadding),
 
               // Email Field
-              TextFormField(
+              AuthTextField(
                 controller: _emailController,
+                labelText: 'ইমেইল',
+                hintText: 'your@example.com',
+                prefixIcon: const Icon(Icons.email_outlined),
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  labelText: 'ইমেইল', // "Email"
-                  hintText: 'your@example.com',
-                  prefixIcon: Icon(Icons.email_outlined),
-                ),
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
                     return 'ইমেইল প্রয়োজন'; // "Email is required"
@@ -183,27 +182,25 @@ class _LoginPageState extends State<LoginPage>
               const SizedBox(height: AppConstants.defaultPadding),
 
               // Password Field
-              TextFormField(
+              AuthTextField(
                 controller: _passwordController,
+                labelText: 'পাসওয়ার্ড',
+                hintText: '••••••••',
+                prefixIcon: const Icon(Icons.lock_outlined),
                 obscureText: !_isPasswordVisible,
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (_) => _handleLogin(),
-                decoration: InputDecoration(
-                  labelText: 'পাসওয়ার্ড', // "Password"
-                  hintText: '••••••••',
-                  prefixIcon: const Icon(Icons.lock_outlined),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                   ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
                 ),
                 validator: (value) {
                   if (value?.isEmpty ?? true) {

@@ -7,11 +7,11 @@ class RouteNames {
   static const String onboarding = '/onboarding';
   static const String dashboard = '/dashboard';
 
-
   // Authentication routes
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot-password';
+  static const String emailVerification = '/email-verification';
   static const String profileSetup = '/profile-setup';
 
   // Discovery routes

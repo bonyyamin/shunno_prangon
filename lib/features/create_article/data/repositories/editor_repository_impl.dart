@@ -441,4 +441,94 @@ class EditorRepositoryImpl implements EditorRepository {
       yield Result.error(const RepositoryException('Internet connection required to stream drafts'));
     }
   }
+
+  @override
+  Future<Result<void, RepositoryException>> deleteCoverImage(String imageUrl) {
+    // TODO: implement deleteCoverImage
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<void, RepositoryException>> incrementViewCount(String articleId) {
+    // TODO: implement incrementViewCount
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<void, RepositoryException>> updatePublishedArticle(PublishedArticleModel article) {
+    // TODO: implement updatePublishedArticle
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<Result<List<PublishedArticleModel>, RepositoryException>> streamUserPublishedArticles() {
+    // TODO: implement streamUserPublishedArticles
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<Map<String, Result<String, RepositoryException>>, RepositoryException>> saveDrafts(List<DraftModel> drafts) {
+    // TODO: implement saveDrafts
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<Map<String, Result<void, RepositoryException>>, RepositoryException>> deleteDrafts(List<String> draftIds) {
+    // TODO: implement deleteDrafts
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<List<DraftModel>, RepositoryException>> searchDraftsAdvanced({String? query, List<String>? categories, List<String>? tags, DateTime? dateFrom, DateTime? dateTo, int? minWordCount, int? maxWordCount}) {
+    // TODO: implement searchDraftsAdvanced
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<List<PublishedArticleModel>, RepositoryException>> searchArticles({String? query, List<String>? categories, List<String>? tags, DateTime? dateFrom, DateTime? dateTo, PublishVisibility? visibility}) {
+    // TODO: implement searchArticles
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<Map<String, dynamic>, RepositoryException>> exportUserData() {
+    // TODO: implement exportUserData
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<void, RepositoryException>> importUserData(Map<String, dynamic> data, {bool overwrite = false}) {
+    // TODO: implement importUserData
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<String, RepositoryException>> shareDraft(String draftId, {List<String>? userIds, Duration? expiry}) {
+    // TODO: implement shareDraft
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<List<DraftModel>, RepositoryException>> getSharedDrafts() {
+    // TODO: implement getSharedDrafts
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<String, RepositoryException>> saveDraftAsTemplate(String draftId, String templateName) {
+    // TODO: implement saveDraftAsTemplate
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<List<DraftModel>, RepositoryException>> getUserTemplates() {
+    // TODO: implement getUserTemplates
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<String, RepositoryException>> createDraftFromTemplate(String templateId) {
+    // TODO: implement createDraftFromTemplate
+    throw UnimplementedError();
+  }
 }

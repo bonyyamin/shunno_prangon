@@ -455,13 +455,6 @@ class _DraftsPageState extends State<DraftsPage> {
 }
 
 class DraftArticle {
-  final String id;
-  final String title;
-  final String summary;
-  final String category;
-  final DateTime lastModified;
-  final int wordCount;
-  final List<String> tags;
 
   DraftArticle({
     required this.id,
@@ -472,4 +465,11 @@ class DraftArticle {
     required this.wordCount,
     required this.tags,
   });
+  final String id;
+  final String title;
+  final String summary;
+  final String category;
+  final DateTime lastModified;
+  final int wordCount;
+  final List<String> tags;
 }
